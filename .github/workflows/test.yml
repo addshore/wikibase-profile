@@ -12,7 +12,8 @@ jobs:
           - mwNoJobs
           - wbNoChangesTable
         loads:
-          - 500EmptyItems
+          - 1000EmptyItems
+          - 1000SingleTermItems
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

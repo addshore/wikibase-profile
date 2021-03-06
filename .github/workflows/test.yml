@@ -1,0 +1,18 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [default]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: PROFILE_TEST=${{ matrix.profile }} docker-compose up -d
+      - run: ./docker-compose-wait.sh
+      - run: sleep 5
+      - run: ./${{ matrix.profile }}/process.sh
+      - run: docker-compose down

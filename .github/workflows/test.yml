@@ -3,12 +3,12 @@ on:
     branches:
       - main
 jobs:
-  test:
+  profile:
     strategy:
       fail-fast: false
       matrix:
         settings: [default]
-        loads: [10EmptyItems]
+        loads: [10EmptyItems,100EmptyItems]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

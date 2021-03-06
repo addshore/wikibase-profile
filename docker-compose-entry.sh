@@ -10,13 +10,15 @@ if [ ! -f entrypoint-done.txt ]; then
     /wait-for-it.sh mysql:3306 -t 300
 
     # Install MediaWiki
-    php maintenance/install.php --server="http://localhost:8181" --scriptpath= --dbtype mysql --dbuser wikiuse --dbpass sqlpass --dbserver mysql --lang en --dbname my_wiki --pass LongCIPass123 SiteName CIUser
+    php maintenance/install.php --server="http://localhost:8181" --scriptpath= --dbtype mysql --dbuser wikiuser --dbpass sqlpass --dbserver mysql --lang en --dbname my_wiki --pass LongCIPass123 SiteName CIUser
 
     # Load Wikibase defaults
     echo "require_once \"\$IP/extensions/Wikibase/vendor/autoload.php\";" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/repo/Wikibase.php\";" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/repo/ExampleSettings.php\";" >> LocalSettings.php
 
+    # Don't rate limit the anon user
+    echo "\$wgGroupPermissions['*']['noratelimit'] = true;" >> LocalSettings.php
     # And allow anon users to create properties (so we don't need to log in)
     echo "\$wgGroupPermissions['*']['property-create'] = true;" >> LocalSettings.php
 

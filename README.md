@@ -11,3 +11,12 @@ Steps:
 - Do some amount of known work
 - Stop timer
 - Output result...
+
+You can also try running them locally... For example...
+
+```sh
+PROFILE_SETTINGS=default docker-compose up -d
+./docker-compose-wait.sh
+sleep 3
+./loads/10EmptyItems.sh
+```

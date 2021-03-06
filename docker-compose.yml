@@ -2,7 +2,7 @@ version: '3'
 
 services:
   wikibase:
-    image: wikibase/wikibase:1.35-base
+    image: ${PROFILE_IMAGE}
     entrypoint: /code-repo/docker-compose-entry.sh
     volumes:
       - ./:/code-repo

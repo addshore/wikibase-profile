@@ -17,6 +17,8 @@ if [ ! -f entrypoint-done.txt ]; then
     echo "require_once \"\$IP/extensions/Wikibase/repo/Wikibase.php\";" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/repo/ExampleSettings.php\";" >> LocalSettings.php
 
+    # If we get errors make them easier to debug
+    echo "\$wgShowExceptionDetails = true;" >> LocalSettings.php
     # Don't rate limit the anon user
     echo "\$wgGroupPermissions['*']['noratelimit'] = true;" >> LocalSettings.php
     # And allow anon users to create properties (so we don't need to log in)

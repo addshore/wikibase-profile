@@ -23,8 +23,8 @@ if [ ! -f entrypoint-done.txt ]; then
     # Update MediaWiki & Extensions
     php maintenance/update.php --quick
 
-    # Settings to make testing easier
-    #echo "\$wgGroupPermissions['*']['noratelimit'] = true;" >> LocalSettings.php
+    # Run extra entry point stuff for this test (such as config changes)
+    /code-test/entry.sh
 
     # Mark the entrypoint as having run!
     echo "entrypoint done!" > entrypoint-done.txt

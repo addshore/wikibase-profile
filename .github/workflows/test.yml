@@ -16,3 +16,8 @@ jobs:
       - run: sleep 5
       - run: ./${{ matrix.profile }}/process.sh
       - run: docker-compose down
+      - run: |
+          cat process.out
+          cat start.out
+          cat stop.out
+          let length=$(cat stop.out)-$(cat start.out)

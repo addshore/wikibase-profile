@@ -40,7 +40,7 @@ jobs:
           let length=$(cat stop.out)-$(cat start.out)
           echo "Elapsed time: " $length
           # https://docs.github.com/en/rest/reference/checks#annotations-items
-          echo "[{\"title\":\"Profile Output\",\"message\":\"Elapsed time: ${length}\",\"path\":\".github/workflows/test.yml\",\"start_line\":1,\"end_line\":1,\"annotation_level\":\"notice\"}]" > annotations.json
+          echo "[{\"title\":\"${{ matrix.settings }} ${{ matrix.loads }}\",\"message\":\"Elapsed time: ${length}\",\"path\":\".github/workflows/test.yml\",\"start_line\":1,\"end_line\":1,\"annotation_level\":\"notice\"}]" > annotations.json
       - name: Annotate
         uses: kibalabs/github-action-create-annotations@main
         with:

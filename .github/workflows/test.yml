@@ -12,9 +12,9 @@ jobs:
           - mwNoJobs
           - wbNoChangesTable
         loads:
-          - 1000EmptyItems
-          - 1000SingleTermItems
-          - 1000MultiTermItems
+          - 2000EmptyItems
+          - 2000SingleTermItems
+          - 2000MultiTermItems
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -46,4 +46,3 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           input: './annotations.json'
-          title: 'Annotate Files'

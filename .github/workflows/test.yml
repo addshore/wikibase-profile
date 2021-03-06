@@ -14,6 +14,7 @@ jobs:
         loads:
           - 1000EmptyItems
           - 1000SingleTermItems
+          - 1000MultiTermItems
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -31,11 +32,18 @@ jobs:
           date +%s >> stop.out
       - name: Stop containers
         run: docker-compose down
+      - name: Output logs
+        run: cat process.out
       - name: Output Result
         run: |
-          echo "Raw process output..."
-          cat process.out
           echo "Start time: " $(cat start.out)
           echo "Stop time: " $(cat stop.out)
           let length=$(cat stop.out)-$(cat start.out)
           echo "Elapsed time: " $length
+          echo "[{\"title\":\"Profile Output\",\"message\":\"Elapsed time: ${length}\",\"file\":\".github/workflows/test.yml\",\"line\":1,\"annotation_level\":\"notice\"}]" > annotations.json
+      - name: Annotate
+        uses: yuzutech/annotations-action@v0.1.0
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          input: './annotations.json'
+          title: 'Annotate Files'

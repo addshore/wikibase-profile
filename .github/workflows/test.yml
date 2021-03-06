@@ -7,21 +7,34 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        settings: [default]
-        loads: [10EmptyItems,100EmptyItems]
+        settings: 
+          - default
+          - mwNoJobs
+          - wbNoChangesTable
+        loads:
+          - 500EmptyItems
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: PROFILE_SETTINGS=${{ matrix.settings }} docker-compose up -d
-      - run: ./docker-compose-wait.sh
-      - run: sleep 5
-      - run: |
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run containers
+        run: PROFILE_SETTINGS=${{ matrix.settings }} docker-compose up -d
+      - name: Wait for setup
+        run: |
+          ./docker-compose-wait.sh
+          sleep 5
+      - name: Perform test
+        run: |
           date +%s >> start.out
           ./loads/${{ matrix.loads }}.sh
           date +%s >> stop.out
-      - run: docker-compose down
-      - run: |
+      - name: Stop containers
+        run: docker-compose down
+      - name: Output Result
+        run: |
+          echo "Raw process output..."
           cat process.out
-          cat start.out
-          cat stop.out
+          echo "Start time: " $(cat start.out)
+          echo "Stop time: " $(cat stop.out)
           let length=$(cat stop.out)-$(cat start.out)
+          echo "Elapsed time: " $length

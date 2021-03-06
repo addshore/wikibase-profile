@@ -15,6 +15,7 @@ jobs:
           - 2000EmptyItems
           - 2000SingleTermItems
           - 2000MultiTermItems
+          - 2000FullishItems
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -38,9 +39,10 @@ jobs:
           echo "Stop time: " $(cat stop.out)
           let length=$(cat stop.out)-$(cat start.out)
           echo "Elapsed time: " $length
-          echo "[{\"title\":\"Profile Output\",\"message\":\"Elapsed time: ${length}\",\"file\":\".github/workflows/test.yml\",\"line\":1,\"annotation_level\":\"notice\"}]" > annotations.json
+          # https://docs.github.com/en/rest/reference/checks#annotations-items
+          echo "[{\"title\":\"Profile Output\",\"message\":\"Elapsed time: ${length}\",\"path\":\".github/workflows/test.yml\",\"start_line\":1,\"end_line\":1,\"annotation_level\":\"notice\"}]" > annotations.json
       - name: Annotate
-        uses: yuzutech/annotations-action@v0.1.0
+        uses: kibalabs/github-action-create-annotations@main
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          input: './annotations.json'
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          json-file-path: './annotations.json'

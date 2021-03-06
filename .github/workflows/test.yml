@@ -32,8 +32,6 @@ jobs:
           date +%s >> stop.out
       - name: Stop containers
         run: docker-compose down
-      - name: Output logs
-        run: cat process.out
       - name: Output Result
         run: |
           echo "Start time: " $(cat start.out)

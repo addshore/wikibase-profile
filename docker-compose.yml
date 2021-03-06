@@ -3,10 +3,10 @@ version: '3'
 services:
   wikibase:
     image: wikibase/wikibase:1.35-base
-    entrypoint: /docker-compose-entry.sh
+    entrypoint: /code-repo/docker-compose-entry.sh
     volumes:
       - ./:/code-repo
-      - ./${PROFILE_TEST}:/code-test
+      - ./settings/${PROFILE_SETTINGS}.sh:/code-settings.sh
     links:
       - mysql
     ports:

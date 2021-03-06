@@ -24,7 +24,7 @@ if [ ! -f entrypoint-done.txt ]; then
     php maintenance/update.php --quick
 
     # Run extra entry point stuff for this test (such as config changes)
-    /code-test/entry.sh
+    /code-settings.sh
 
     # Mark the entrypoint as having run!
     echo "entrypoint done!" > entrypoint-done.txt

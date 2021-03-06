@@ -7,14 +7,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        profile: [default]
+        settings: [default]
+        loads: [10EmptyItems]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: PROFILE_TEST=${{ matrix.profile }} docker-compose up -d
+      - run: PROFILE_SETTINGS=${{ matrix.settings }} docker-compose up -d
       - run: ./docker-compose-wait.sh
       - run: sleep 5
-      - run: ./${{ matrix.profile }}/process.sh
+      - run: |
+          date +%s >> start.out
+          ./loads/${{ matrix.loads }}.sh
+          date +%s >> stop.out
       - run: docker-compose down
       - run: |
           cat process.out

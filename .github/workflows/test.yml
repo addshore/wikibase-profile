@@ -17,8 +17,8 @@ jobs:
         sql: 
           - mariadb:10.3
           - mariadb:10.5
-          - mariadb:5.7
-          - mariadb:8.0
+          - mysql:5.7
+          - mysql:8.0
         settings: 
           - default
           - mwNoJobs

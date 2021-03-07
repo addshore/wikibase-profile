@@ -29,6 +29,8 @@ jobs:
           # - default
           - lightweight
           - lightweight-wbNoSharedCache
+          - lightweight-mwCacheDirectory
+          # - mwCacheDirectory
           # - mwNoJobs
           # - wbNoChangesTable
           # - wbNewTerms
@@ -43,10 +45,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run containers
-        run: PROFILE_SETTINGS=${{ matrix.settings }} PROFILE_IMAGE=${{ matrix.images }} PROFILE_SQL=${{ matrix.sql }} docker-compose up -d
-      - name: Wait for setup
         run: |
+          PROFILE_SETTINGS=${{ matrix.settings }} PROFILE_IMAGE=${{ matrix.images }} PROFILE_SQL=${{ matrix.sql }} docker-compose up -d mysql wikibase1
           ./docker-compose-wait1.sh
+          PROFILE_SETTINGS=${{ matrix.settings }} PROFILE_IMAGE=${{ matrix.images }} PROFILE_SQL=${{ matrix.sql }} docker-compose up -d wikibase2
           ./docker-compose-wait2.sh
           sleep 5
       - name: Perform test

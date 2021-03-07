@@ -30,13 +30,13 @@ if [ ! -f entrypoint-done.txt ]; then
     # Update MediaWiki & Extensions
     #php maintenance/update.php --quick
 
-    # Build the localisation cache ahead of makinng bulk requests (as building it can cause issues)
-    #php maintenance/rebuildLocalisationCache.php --lang en
-    # And disable any recaching on web requests
-    #echo "\$wgLocalisationCacheConf['manualRecache'] = true;" >> LocalSettings.php
-
     # Run extra entry point stuff for this test (such as config changes)
     /code-settings.sh
+
+    # Build the localisation cache ahead of makinng bulk requests (as building it can cause issues)
+    php maintenance/rebuildLocalisationCache.php --lang en
+    # And disable any recaching on web requests
+    echo "\$wgLocalisationCacheConf['manualRecache'] = true;" >> LocalSettings.php
 
     # Mark the entrypoint as having run!
     echo "entrypoint done!" > entrypoint-done.txt

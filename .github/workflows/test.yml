@@ -28,7 +28,7 @@ jobs:
         settings:
           # - default
           - lightweight
-#          - lightweight-wbNoSharedCache
+          - lightweight-wbNoSharedCache
           - lightweight-mwCacheDirectory
           # - mwCacheDirectory
           # - mwNoJobs
@@ -56,8 +56,10 @@ jobs:
           date +%s >> start.out
           ASYNC=${{ matrix.async }} INSTANCES=${{ matrix.instances }} ./loads/${{ matrix.loads }}.sh
           date +%s >> stop.out
-      - name: Output container logs
-        run: docker-compose logs
+      - name: Output things
+        run: |
+          cat process.out
+          docker-compose logs
       - name: Stop containers
         run: docker-compose down
       - name: Output Result

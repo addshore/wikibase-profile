@@ -34,3 +34,5 @@ do
   )&
   if (( $(wc -w <<<$(jobs -p)) % $ASYNC == 0 )); then wait; fi
 done
+
+wait

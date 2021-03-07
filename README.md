@@ -11,12 +11,14 @@ Steps:
 - Do some amount of known work
 - Stop timer
 - Output result...
+- Send result to Google Sheet via IFTTT
 
 You can also try running them locally... For example...
 
 ```sh
-PROFILE_SETTINGS=default docker-compose up -d
-./docker-compose-wait.sh
+PROFILE_IMAGE=wikibase/wikibase:1.35-base PROFILE_SETTINGS=lightweight PROFILE_SQL=mariadb:10.5 docker-compose up -d
+./docker-compose-wait1.sh
+./docker-compose-wait2.sh
 sleep 3
-./loads/10EmptyItems.sh
+ASYNC=40 INSTANCES=2 ./loads/2000EmptyItems.sh
 ```

@@ -7,6 +7,7 @@ services:
     volumes:
       - ./:/code-repo
       - ./settings/${PROFILE_SETTINGS}.sh:/code-settings.sh
+      - ./apache.extra.conf:/etc/apache2/conf-available/wb-profile.extra.conf
     links:
       - mysql
     ports:
@@ -19,6 +20,7 @@ services:
     volumes:
       - ./:/code-repo
       - ./settings/${PROFILE_SETTINGS}.sh:/code-settings.sh
+      - ./apache.extra.conf:/etc/apache2/conf-available/wb-profile.extra.conf
     links:
       - mysql
     ports:

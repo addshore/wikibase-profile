@@ -29,7 +29,7 @@ jobs:
           # - default
           - lightweight
 #          - lightweight-wbNoSharedCache
-#          - lightweight-mwCacheDirectory
+          - lightweight-mwCacheDirectory
           # - mwCacheDirectory
           # - mwNoJobs
           # - wbNoChangesTable

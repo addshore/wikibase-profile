@@ -13,9 +13,10 @@ jobs:
           - 2
           # - 3 #  3 generally seemed to be a bit slower? Could just be resource constraints though... (should try on k8s? :D)
         async:
-#          - 80
+          - 80
           - 110
-#          - 140
+          - 140
+          - 170
         images:
           # - wikibase/wikibase:1.33-base
           # - wikibase/wikibase:1.34-base

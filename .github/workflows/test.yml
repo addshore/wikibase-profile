@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         instances:
-#          - 1
+          - 1
           - 2
           # - 3 #  3 generally seemed to be a bit slower? Could just be resource constraints though... (should try on k8s? :D)
         async:
@@ -41,7 +41,7 @@ jobs:
           - 2000EmptyItems
           # - 2000SingleTermItems
           # - 2000MultiTermItems
-#          - 2000FullishItems
+          - 2000FullishItems
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

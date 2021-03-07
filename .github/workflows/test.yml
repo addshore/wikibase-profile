@@ -8,6 +8,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        async: 
+          - 40
         images: 
           # - wikibase/wikibase:1.33-base
           # - wikibase/wikibase:1.34-base
@@ -40,7 +42,7 @@ jobs:
       - name: Perform test
         run: |
           date +%s >> start.out
-          ./loads/${{ matrix.loads }}.sh
+          ASYNC=${{ matrix.async }} ./loads/${{ matrix.loads }}.sh
           date +%s >> stop.out
       - name: Stop containers
         run: docker-compose down
@@ -53,7 +55,7 @@ jobs:
           echo "Elapsed time: " $length
           echo "::set-output name=elapsed::$(echo ${length})"
           # https://docs.github.com/en/rest/reference/checks#annotations-items
-          echo "[{\"title\":\"${{ matrix.images }} ${{ matrix.settings }} ${{ matrix.loads }} ${{ matrix.sql }}\",\"message\":\"Elapsed time: ${length}\",\"path\":\".github/workflows/test.yml\",\"start_line\":1,\"end_line\":1,\"annotation_level\":\"notice\"}]" > annotations.json
+          echo "[{\"title\":\"${{ matrix.images }} ${{ matrix.settings }} ${{ matrix.loads }} ${{ matrix.sql }} Async:${{ matrix.async }}\",\"message\":\"Elapsed time: ${length}\",\"path\":\".github/workflows/test.yml\",\"start_line\":1,\"end_line\":1,\"annotation_level\":\"notice\"}]" > annotations.json
       - name: Annotate
         uses: kibalabs/github-action-create-annotations@main
         with:
@@ -65,5 +67,5 @@ jobs:
           webhook_eventname: "gha-wikibase-profile-result"
           webhook_key: "${{secrets.IFTTT_WEBHOOK_KEY}}"
           value1: ${{ github.ref }} ${{ github.run_number }}
-          value2: ${{ matrix.images }} ${{ matrix.settings }} ${{ matrix.loads }} ${{ matrix.sql }}
+          value2: ${{ matrix.images }} ${{ matrix.settings }} ${{ matrix.loads }} ${{ matrix.sql }} ${{ matrix.async }}
           value3: ${{ steps.output-calc.outputs.elapsed }}

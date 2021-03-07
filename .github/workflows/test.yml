@@ -66,6 +66,6 @@ jobs:
         with:
           webhook_eventname: "gha-wikibase-profile-result"
           webhook_key: "${{secrets.IFTTT_WEBHOOK_KEY}}"
-          value1: ${{ github.ref }} ${{ github.run_number }}
+          value1: ${{ github.ref }} ${{ github.run_id }} ${{ github.run_number }}
           value2: ${{ matrix.images }} ${{ matrix.settings }} ${{ matrix.loads }} ${{ matrix.sql }} ${{ matrix.async }}
           value3: ${{ steps.output-calc.outputs.elapsed }}

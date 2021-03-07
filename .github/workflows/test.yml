@@ -18,7 +18,7 @@ jobs:
           - mariadb:10.3
           - mariadb:10.5
           - mysql:5.7
-          - mysql:8.0
+          # - mysql:8.0 # Errors with Call to a member function getIP() on null in /var/www/html/includes/user/User.php:2153
         settings: 
           - default
           - mwNoJobs
@@ -27,7 +27,7 @@ jobs:
         loads:
           - 2000EmptyItems
           # - 2000SingleTermItems
-          - 2000MultiTermItems
+          # - 2000MultiTermItems
           - 2000FullishItems
     runs-on: ubuntu-latest
     steps:

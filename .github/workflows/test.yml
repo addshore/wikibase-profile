@@ -13,6 +13,7 @@ jobs:
           - 2
           # - 3 #  3 generally seemed to be a bit slower? Could just be resource constraints though... (should try on k8s? :D)
         async:
+          - 50
           - 80
           - 110
           - 140
@@ -69,10 +70,13 @@ jobs:
           echo "Start time: " $(cat start.out)
           echo "Stop time: " $(cat stop.out)
           let length=$(cat stop.out)-$(cat start.out)
+          SUCCESSES=$(cat process.out | grep -o success | wc -l)
+          echo "Successfull calls: " $SUCCESSES
           echo "Elapsed time: " $length
           echo "::set-output name=elapsed::$(echo ${length})"
+          echo "::set-output name=successes::$(echo ${SUCCESSES})"
           # https://docs.github.com/en/rest/reference/checks#annotations-items
-          echo "[{\"title\":\"${{ matrix.settings }} ${{ matrix.loads }} Async:${{ matrix.async }} Instances:${{ matrix.instances }}\",\"message\":\"Elapsed time: ${length}\",\"path\":\".github/workflows/test.yml\",\"start_line\":1,\"end_line\":1,\"annotation_level\":\"notice\"}]" > annotations.json
+          echo "[{\"title\":\"${{ matrix.settings }} ${{ matrix.loads }} Async:${{ matrix.async }} Instances:${{ matrix.instances }}\",\"message\":\"Elapsed time: ${length} Successes: ${SUCCESSES}\",\"path\":\".github/workflows/test.yml\",\"start_line\":1,\"end_line\":1,\"annotation_level\":\"notice\"}]" > annotations.json
       - name: Annotate
         uses: kibalabs/github-action-create-annotations@main
         with:
@@ -85,4 +89,4 @@ jobs:
           webhook_key: "${{secrets.IFTTT_WEBHOOK_KEY}}"
           value1: ${{ github.ref }} ${{ github.run_id }} ${{ github.run_number }}
           value2: ${{ matrix.images }} ${{ matrix.settings }} ${{ matrix.loads }} ${{ matrix.sql }} ${{ matrix.async }} ${{ matrix.instances }} 
-          value3: ${{ steps.output-calc.outputs.elapsed }}
+          value3: ${{ steps.output-calc.outputs.elapsed }} ${{ steps.output-calc.outputs.successes }}

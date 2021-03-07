@@ -18,3 +18,14 @@ echo "\$wgWBRepoSettings['useChangesTable'] = false;" >> LocalSettings.php
 # Use a seperate DB connection for ID allocation to reduce contention
 # https://doc.wikimedia.org/Wikibase/master/php/md_docs_topics_options.html#repo_idGeneratorSeparateDbConnection
 echo "\$wgWBRepoSettings['idGeneratorSeparateDbConnection'] = true;" >> LocalSettings.php
+
+# Do not use a shared Wikibase cache, this is mainly useful for multi site setups? or reads?
+# https://doc.wikimedia.org/Wikibase/master/php/md_docs_topics_options.html#common_sharedCacheType
+echo "\$wgWBRepoSettings['sharedCacheType'] = CACHE_NONE;" >> LocalSettings.php
+
+## Set $wgCacheDirectory to a writable directory on the web server
+## to make your wiki go slightly faster. The directory should not
+## be publicly accessible from the web.
+echo "\$wgCacheDirectory = \"\$IP/cache\";" >> LocalSettings.php
+mkdir cache
+chmod -R 775 cache

@@ -28,10 +28,8 @@ jobs:
           # - mysql:5.7 # MariaDB seems to generally be the faster choice...
           # - mysql:8.0 # Broken! and thus untested... (Probably because the install fails? :)
         settings:
-          # - default
+          - default
           - lightweight
-          - lightweight-wbNoSharedCache
-          - lightweight-mwCacheDirectory
           # - mwCacheDirectory
           # - mwNoJobs
           # - wbNoChangesTable

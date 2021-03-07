@@ -28,6 +28,7 @@ jobs:
         settings:
           # - default
           - lightweight
+          - lightweight-wbNoSharedCache
           # - mwNoJobs
           # - wbNoChangesTable
           # - wbNewTerms

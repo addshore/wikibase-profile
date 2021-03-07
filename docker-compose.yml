@@ -14,7 +14,7 @@ services:
     depends_on:
     - mysql
   mysql:
-    image: ${{PROFILE_SQL}}
+    image: ${PROFILE_SQL}
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
       MYSQL_DATABASE: 'my_wiki'

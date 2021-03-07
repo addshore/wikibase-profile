@@ -4,19 +4,12 @@ curl -s -m 20 -X POST -F 'action=wbeditentity' -F 'format=json' -F 'token=+\' -F
 
 # Then do the bulk of the stuff
 
-(for i in {1..1000}
+for i in {1..2000}
 do
   (
     curl -s -m 20 -X POST -F 'action=wbeditentity' -F 'format=json' -F 'token=+\' -F 'new=item' -F 'data={}' http://localhost:818$((1 + RANDOM % $INSTANCES))/w/api.php >> process.out
   )&
   if (( $(wc -w <<<$(jobs -p)) % $ASYNC == 0 )); then sleep 0.5; fi
-done)&
-(for i in {1..1000}
-do
-  (
-    curl -s -m 20 -X POST -F 'action=wbeditentity' -F 'format=json' -F 'token=+\' -F 'new=item' -F 'data={}' http://localhost:818$((1 + RANDOM % $INSTANCES))/w/api.php >> process.out
-  )&
-  if (( $(wc -w <<<$(jobs -p)) % $ASYNC == 0 )); then sleep 0.5; fi
-done)&
+done
 
 wait

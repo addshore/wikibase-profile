@@ -39,6 +39,8 @@ services:
   #   - mysql
   mysql:
     image: ${PROFILE_SQL}
+    volumes:
+      - ./my.extra.cnf:/etc/mysql/conf.d/wb-profile.extra.cnf
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
       MYSQL_DATABASE: 'my_wiki'

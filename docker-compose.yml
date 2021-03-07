@@ -25,6 +25,18 @@ services:
      - "8182:80"
     depends_on:
     - mysql
+  wikibase3:
+    image: ${PROFILE_IMAGE}
+    entrypoint: /code-repo/docker-compose-entry2.sh
+    volumes:
+      - ./:/code-repo
+      - ./settings/${PROFILE_SETTINGS}.sh:/code-settings.sh
+    links:
+      - mysql
+    ports:
+     - "8183:80"
+    depends_on:
+    - mysql
   mysql:
     image: ${PROFILE_SQL}
     environment:

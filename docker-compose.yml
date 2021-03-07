@@ -14,7 +14,7 @@ services:
     depends_on:
     - mysql
   mysql:
-    image: mariadb:10.3
+    image: ${{PROFILE_SQL}}
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
       MYSQL_DATABASE: 'my_wiki'

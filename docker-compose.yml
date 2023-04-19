@@ -8,6 +8,13 @@ services:
       - ./:/code-repo
       - ./settings/${PROFILE_SETTINGS}.sh:/code-settings.sh
       - ./apache.extra.conf:/etc/apache2/conf-available/wb-profile.extra.conf
+      - type: bind
+        source: ./modifications/wikibase-fast-import-proof-of-concept-2022/${PROFILE_IMAGE}/extension-repo.json
+        target: /var/www/html/extensions/Wikibase/extension-repo.json
+      - type: bind
+        source: ./modifications/wikibase-fast-import-proof-of-concept-2022/${PROFILE_IMAGE}/FastImport.php
+        target: /var/www/html/extensions/Wikibase/repo/includes/Api/FastImport.php
+
     links:
       - mysql
     ports:
@@ -21,6 +28,12 @@ services:
       - ./:/code-repo
       - ./settings/${PROFILE_SETTINGS}.sh:/code-settings.sh
       - ./apache.extra.conf:/etc/apache2/conf-available/wb-profile.extra.conf
+      - type: bind
+        source: ./modifications/wikibase-fast-import-proof-of-concept-2022/${PROFILE_IMAGE}/extension-repo.json
+        target: /var/www/html/extensions/Wikibase/extension-repo.json
+      - type: bind
+        source: ./modifications/wikibase-fast-import-proof-of-concept-2022/${PROFILE_IMAGE}/FastImport.php
+        target: /var/www/html/extensions/Wikibase/repo/includes/Api/FastImport.php
     links:
       - mysql
     ports:

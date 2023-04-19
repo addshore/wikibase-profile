@@ -16,8 +16,8 @@ if [ ! -f entrypoint-done.txt ]; then
     cp /code-repo/LocalSettings.php ./
 
     # Load Wikibase defaults
-    echo "wfLoadExtension( \"WikibaseRepo\", \"\$IP/extensions/Wikibase/extension-repo.json\" );" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/repo/ExampleSettings.php\";" >> LocalSettings.php
+    echo "wfLoadExtension( \"WikibaseRepo\", \"\$IP/extensions/Wikibase/extension-repo.json\" );" >> LocalSettings.php
 
     # If we get errors make them easier to debug
     echo "\$wgShowExceptionDetails = true;" >> LocalSettings.php

@@ -1,6 +1,6 @@
 # wikibase-profile
 
-The general idea of this repo is to allow some basic profiling of different settings using docker and possible GIthub actions?
+The general idea of this repo is to allow some basic profiling of different settings using docker and possible Github actions?
 
 Steps:
 

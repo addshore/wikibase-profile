@@ -79,6 +79,8 @@ class FastImport extends ApiBase {
                                 $results[$key] = [
                                         'id' => $revision->getEntity()->getId()->getSerialization(),
                                         'rev' => $revision->getRevisionId(),
+                                        # success added for wikibase-profile to detect...
+                                        'success' => 1,
                                 ];
                         } catch ( \Exception $e ) {
                                 $results[$key] = [

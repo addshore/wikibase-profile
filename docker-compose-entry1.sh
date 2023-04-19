@@ -13,7 +13,6 @@ if [ ! -f entrypoint-done.txt ]; then
     php maintenance/install.php --server="http://localhost:8181" --scriptpath= --dbtype mysql --dbuser wikiuser --dbpass sqlpass --dbserver mysql --lang en --dbname my_wiki --pass LongCIPass123 SiteName CIUser
 
     # Load Wikibase defaults
-    echo "require_once \"\$IP/extensions/Wikibase/vendor/autoload.php\";" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/repo/Wikibase.php\";" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/repo/ExampleSettings.php\";" >> LocalSettings.php
 

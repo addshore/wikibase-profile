@@ -16,7 +16,6 @@ if [ ! -f entrypoint-done.txt ]; then
     cp /code-repo/LocalSettings.php ./
 
     # Load Wikibase defaults
-    echo "require_once \"\$IP/extensions/Wikibase/vendor/autoload.php\";" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/repo/Wikibase.php\";" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/repo/ExampleSettings.php\";" >> LocalSettings.php
 

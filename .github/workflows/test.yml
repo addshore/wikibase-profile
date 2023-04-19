@@ -20,10 +20,10 @@ jobs:
           # - wikibase/wikibase:1.33-base
           # - wikibase/wikibase:1.34-base
           - wikibase/wikibase:1.35-base
-          - wikibase/wikibase:1.36-base
-          - wikibase/wikibase:1.37-base
-          - wikibase/wikibase:1.38-base
-          # - wikibase/wikibase:1.39-base # Requires wfLoadExtension
+          - wikibase/wikibase:1.36.4-wmde.8
+          - wikibase/wikibase:1.37.6-wmde.9
+          - wikibase/wikibase:1.38.5-wmde.10
+          # - wikibase/wikibase:1.39.1-wmde.11 # Requires wfLoadExtension
         sql:
           # - mariadb:10.3 # No real difference between 10.3 and 10.5 mariadb, so just use the newest one
           # - mariadb:10.5

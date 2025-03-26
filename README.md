@@ -18,9 +18,9 @@ Steps:
 You can also try running them locally... For example...
 
 ```sh
-export PROFILE_IMAGE=wikibase/wikibase:1.39.1-wmde.11
+export PROFILE_IMAGE=wikibase/wikibase:mw1.43.0
 export PROFILE_SETTINGS=default
-export PROFILE_SQL=mariadb:10.9
+export PROFILE_SQL=mariadb:11.7
 
 docker-compose up -d mysql wikibase1
 ./docker-compose-wait1.sh
@@ -42,3 +42,15 @@ And to delete everything, just...
 ```sh
 docker-compose down --volumes
 ```
+
+## Running Matrix Jobs Locally
+
+To run the matrix jobs locally, use the `run_matrix.sh` script. This script reads the matrix configuration from `matrix.yml` and runs the jobs locally, storing the outputs in the `.data` directory.
+
+### Usage
+
+```bash
+./run_matrix.sh
+```
+
+The outputs will be stored in the `.data` directory with a directory schema reflecting the matrix configuration. Each run will also be summarized in a CSV file located at `.data/summary.csv`, and the statistics from the API will be included in the output.

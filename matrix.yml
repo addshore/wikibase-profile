@@ -1,0 +1,19 @@
+instances:
+  - 1
+  # - 2
+async:
+  # - 1
+  # - 5
+  - 60
+images:
+  - wikibase/wikibase:1.39.1-wmde.11
+  # - wikibase/wikibase:mw1.43.0
+sql:
+  # - mariadb:10.9
+  - mariadb:11.7
+settings:
+  # - default
+  - lightweight
+loads:
+  - wbeditentity-2000FullishItems
+  # - wbfastimport-2000full-batch100

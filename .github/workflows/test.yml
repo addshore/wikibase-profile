@@ -24,12 +24,8 @@ jobs:
           # - wikibase/wikibase:1.38.5-wmde.10 # Pre extension Registration
           - wikibase/wikibase:1.39.1-wmde.11 # Requires wfLoadExtension
         sql:
-          # - mariadb:10.3 # No real difference between 10.3 and 10.5 mariadb, so just use the newest one
-          # - mariadb:10.5
-          # - mariadb:10.6
-          # - mariadb:10.7
-          # - mariadb:10.8
-          - mariadb:10.9
+          # - mariadb:10.9
+          - mariadb:11.7
           # - mysql:5.7 # MariaDB seems to generally be the faster choice...
           # - mysql:8.0 # Broken! and thus untested... (Probably because the install fails? :)
         settings:

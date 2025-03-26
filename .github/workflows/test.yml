@@ -96,11 +96,11 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           json-file-path: './annotations.json'
-      - name: Send result to IFTTT
-        uses: "hugoalh/GitHubAction.SendToIFTTT@v2.0.0"
-        with:
-          webhook_eventname: "gha-wikibase-profile-result"
-          webhook_key: "${{secrets.IFTTT_WEBHOOK_KEY}}"
-          value1: ${{ github.ref }} ${{ github.run_id }} ${{ github.run_number }}
-          value2: ${{ matrix.images }} ${{ matrix.settings }} ${{ matrix.loads }} ${{ matrix.sql }} ${{ matrix.async }} ${{ matrix.instances }} 
-          value3: ${{ steps.output-calc.outputs.elapsed }} ${{ steps.output-calc.outputs.successes }}
+      # - name: Send result to IFTTT
+      #   uses: "hugoalh/GitHubAction.SendToIFTTT@v2.0.0"
+      #   with:
+      #     webhook_eventname: "gha-wikibase-profile-result"
+      #     webhook_key: "${{secrets.IFTTT_WEBHOOK_KEY}}"
+      #     value1: ${{ github.ref }} ${{ github.run_id }} ${{ github.run_number }}
+      #     value2: ${{ matrix.images }} ${{ matrix.settings }} ${{ matrix.loads }} ${{ matrix.sql }} ${{ matrix.async }} ${{ matrix.instances }} 
+      #     value3: ${{ steps.output-calc.outputs.elapsed }} ${{ steps.output-calc.outputs.successes }}

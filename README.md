@@ -18,12 +18,27 @@ Steps:
 You can also try running them locally... For example...
 
 ```sh
-PROFILE_IMAGE=wikibase/wikibase:1.39.1-wmde.11 PROFILE_SETTINGS=default PROFILE_SQL=mariadb:10.9 docker-compose up -d mysql wikibase1
+export PROFILE_IMAGE=wikibase/wikibase:1.39.1-wmde.11
+export PROFILE_SETTINGS=default
+export PROFILE_SQL=mariadb:10.9
+
+docker-compose up -d mysql wikibase1
 ./docker-compose-wait1.sh
-PROFILE_IMAGE=wikibase/wikibase:1.39.1-wmde.11 PROFILE_SETTINGS=default PROFILE_SQL=mariadb:10.9 docker-compose up -d wikibase2
+docker-compose up -d wikibase2
 ./docker-compose-wait2.sh
-PROFILE_IMAGE=wikibase/wikibase:1.39.1-wmde.11 PROFILE_SETTINGS=default PROFILE_SQL=mariadb:10.9 docker-compose up -d --force-recreate wikibase1
+docker-compose up -d --force-recreate wikibase1
 ./docker-compose-wait1.sh
+
+echo "Sleeping for 5 seconds..."
 sleep 5
-ASYNC=30 INSTANCES=2 ./loads/wbeditentity-2000EmptyItems.sh
+echo "Starting profiling..."
+TIMING=$(time ASYNC=30 INSTANCES=2 ./loads/wbeditentity-2000EmptyItems.sh)
+LAST_LINE=$(tail -n 1 ./process.out)
+STATS=$(curl 'http://localhost:8181/w/api.php?action=query&format=json&meta=siteinfo&siprop=statistics')
+```
+
+And to delete everything, just...
+
+```sh
+docker-compose down --volumes
 ```

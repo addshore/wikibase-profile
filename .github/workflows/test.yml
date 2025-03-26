@@ -51,12 +51,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run containers
+        env:
+          PROFILE_SETTINGS: ${{ matrix.settings }}
+          PROFILE_IMAGE: ${{ matrix.images }}
+          PROFILE_SQL: ${{ matrix.sql }}
         run: |
-          PROFILE_SETTINGS=${{ matrix.settings }} PROFILE_IMAGE=${{ matrix.images }} PROFILE_SQL=${{ matrix.sql }} docker-compose up -d mysql wikibase1
+          docker-compose up -d mysql wikibase1
           ./docker-compose-wait1.sh
-          PROFILE_SETTINGS=${{ matrix.settings }} PROFILE_IMAGE=${{ matrix.images }} PROFILE_SQL=${{ matrix.sql }} docker-compose up -d wikibase2
+          docker-compose up -d wikibase2
           ./docker-compose-wait2.sh
-          PROFILE_SETTINGS=${{ matrix.settings }} PROFILE_IMAGE=${{ matrix.images }} PROFILE_SQL=${{ matrix.sql }} docker-compose up -d --force-recreate wikibase1
+          docker-compose up -d --force-recreate wikibase1
           ./docker-compose-wait1.sh
           sleep 5
       - name: Perform test

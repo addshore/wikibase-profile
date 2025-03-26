@@ -15,5 +15,6 @@ settings:
   # - default
   - lightweight
 loads:
-  - wbeditentity-2000FullishItems
+  # - wbeditentity-2000FullishItems
+  - wbeditentity-5000FullishItems
   # - wbfastimport-2000full-batch100

@@ -43,8 +43,11 @@ for instance in $instances; do
                 export PROFILE_SQL=$sql_version
                 export ENTITY_GROUP=$entity_group
                 export ENTITY_COUNT=$entity_count
+
                 # Cleanup previous
+                docker-compose down --volumes
                 rm -f process.out
+
                 # Run the job
                 docker-compose up -d mysql wikibase1
                 ./docker-compose-wait1.sh
@@ -53,6 +56,7 @@ for instance in $instances; do
                 docker-compose up -d --force-recreate wikibase1
                 ./docker-compose-wait1.sh
                 sleep 2
+                
                 echo "Running init.."
                 start_time=$(date +%s)
                 INSTANCES=$instance ./loads/init.sh
@@ -90,6 +94,8 @@ for instance in $instances; do
                 echo "$runtime,$instance,$async_value,$escaped_image,$sql_version,$escaped_setting,$escaped_load,$entity_count,$start_time,$stop_time,$total_time,$success_line,$escaped_statistics,$entity_group,"
                 # And output the directory
                 echo "Output directory: $job_dir"
+
+                # Cleanup
                 docker-compose down --volumes
               done
             done

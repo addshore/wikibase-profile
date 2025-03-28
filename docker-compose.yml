@@ -6,11 +6,13 @@ services:
       - ./:/code-repo
       - ./settings/${PROFILE_SETTINGS}.sh:/code-settings.sh
       - ./apache.extra.conf:/etc/apache2/conf-available/wb-profile.extra.conf
+      # Get the right file from an image, then modify it...
+      # docker run --rm -it --entrypoint cat wikibase/wikibase:1.40.3-wmde.19 /var/www/html/extensions/Wikibase/extension-repo.json > modifications/fastimportapi/wikibase/wikibase:1.40.3-wmde.19/extension-repo.json
       - type: bind
-        source: ./modifications/wikibase-fast-import-proof-of-concept-2022/${PROFILE_IMAGE}/extension-repo.json
+        source: ./modifications/fastimportapi/${PROFILE_IMAGE}/extension-repo.json
         target: /var/www/html/extensions/Wikibase/extension-repo.json
       - type: bind
-        source: ./modifications/wikibase-fast-import-proof-of-concept-2022/${PROFILE_IMAGE}/FastImport.php
+        source: ./modifications/fastimportapi/${PROFILE_IMAGE}/FastImport.php
         target: /var/www/html/extensions/Wikibase/repo/includes/Api/FastImport.php
 
     links:
@@ -27,10 +29,10 @@ services:
       - ./settings/${PROFILE_SETTINGS}.sh:/code-settings.sh
       - ./apache.extra.conf:/etc/apache2/conf-available/wb-profile.extra.conf
       - type: bind
-        source: ./modifications/wikibase-fast-import-proof-of-concept-2022/${PROFILE_IMAGE}/extension-repo.json
+        source: ./modifications/fastimportapi/${PROFILE_IMAGE}/extension-repo.json
         target: /var/www/html/extensions/Wikibase/extension-repo.json
       - type: bind
-        source: ./modifications/wikibase-fast-import-proof-of-concept-2022/${PROFILE_IMAGE}/FastImport.php
+        source: ./modifications/fastimportapi/${PROFILE_IMAGE}/FastImport.php
         target: /var/www/html/extensions/Wikibase/repo/includes/Api/FastImport.php
     links:
       - mysql

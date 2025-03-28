@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   wikibase1:
     image: ${PROFILE_IMAGE}

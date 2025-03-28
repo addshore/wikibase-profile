@@ -3,18 +3,35 @@ instances:
   # - 2
 async:
   # - 1
-  # - 5
-  - 60
+  - 5
+  - 10
+  # - 30
+  # - 60
+  # - 100
 images:
   - wikibase/wikibase:1.39.1-wmde.11
+  # - wikibase/wikibase:1.40.3-wmde.19
+  # - wikibase/wikibase:1.41.1-wmde.20
+  # - wikibase/wikibase:mw1.42.5
   # - wikibase/wikibase:mw1.43.0
 sql:
   # - mariadb:10.9
   - mariadb:11.7
 settings:
   # - default
-  - lightweight
+  - wbOwnIdConnection
+  # - lightweight
 loads:
-  # - wbeditentity-2000FullishItems
-  - wbeditentity-5000FullishItems
-  # - wbfastimport-2000full-batch100
+  # - wbeditentityFullishItems
+  - wbfastimportFullishItems
+entity_groups:
+  # - 1
+  # - 2
+  # - 5
+  # - 10
+  # - 25
+  - 50
+entity_counts:
+  # - 2000
+  - 5000
+  # - 10000

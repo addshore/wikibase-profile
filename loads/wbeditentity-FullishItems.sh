@@ -10,27 +10,24 @@ make_request() {
   fi
 }
 
-# Get the ball (and id counters rolling) with some simple entities..
-make_request "new=item" "data={}"
-make_request "new=property" "data={\"datatype\":\"string\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}}}"
+ENTITY_GROUP=${ENTITY_GROUP:-1}
+# die if it isnt 1
+if [ $ENTITY_GROUP -ne 1 ]; then
+  echo "ENTITY_GROUP must be 1"
+  exit 1
+fi
 
-# Then do the bulk of the stuff
+# Get entity count, default to 2000 if not set
+ENTITY_COUNT=${ENTITY_COUNT:-2000}
+# Calculate half for each batch (string items and item references)
+HALF_COUNT=$((ENTITY_COUNT / 2))
 
-# Create some properties
-# P2 = wikibase-item
-# P3 = wikibase-property
-# P4 = string
-# P5 = time
-properties=( wikibase-item wikibase-property string time )
-for p in "${properties[@]}"
-do
-  make_request "new=property" "data={\"datatype\":\"${p}\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}}}"
-done
+echo "Creating $ENTITY_COUNT entities ($HALF_COUNT each type)"
 
 # Create some items including statements
 
-# 2500 with strings
-for i in {1..2500}
+# Half with strings
+for i in $(seq 1 $HALF_COUNT)
 do
   (
     make_request "new=item" "data={\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}},\"descriptions\":{\"en\":{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}},\"aliases\":{\"en\":[{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}]},\"claims\":{\"P4\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P4\",\"datavalue\":{\"value\":\"statement-string-value\",\"type\":\"string\"},\"datatype\":\"string\"},\"type\":\"statement\",\"rank\":\"normal\"}]}}"
@@ -38,8 +35,8 @@ do
   if (( $(wc -w <<<$(jobs -p)) % $ASYNC == 0 )); then sleep 0.5; fi
 done
 
-# 2500 linking to other items
-for i in {1..2500}
+# Half linking to other items
+for i in $(seq 1 $HALF_COUNT)
 do
   (
     make_request "new=item" "data={\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}},\"descriptions\":{\"en\":{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}},\"aliases\":{\"en\":[{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}]},\"claims\":{\"P2\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P2\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":1,\"id\":\"Q1\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"rank\":\"normal\"}]}}"

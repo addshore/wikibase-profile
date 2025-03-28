@@ -25,9 +25,10 @@ make_request() {
 
 # Get the ball rolling with a simple entity
 make_single_request "{\"type\":\"item\"}"
-make_request "new=property" "data={\"datatype\":\"string\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}}}"
+# make_request "new=property" "data={\"datatype\":\"string\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}}}"
 
 # For properties, we need to use wbeditentity as wbfastimport doesn't seem to handle property creation
+# P1
 (echo $(curl -s -m 20 -X POST -F 'action=wbeditentity' -F 'format=json' -F 'token=+\' -F 'new=property' -F "data={\"datatype\":\"string\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"$(sed "s/[^a-zA-Z0-9]//g" <<< $(openssl rand -base64 30))\"}}}" http://localhost:818$((1 + RANDOM % $INSTANCES))/w/api.php)) >> process.out
 
 # Create some properties

@@ -13,6 +13,17 @@ echo "Using entity group size: $ENTITY_GROUP"
 echo "Using async job count: $ASYNC"
 echo "Creating $ENTITY_COUNT entities ($HALF_COUNT each type)"
 
+# Function to wait until we have less than ASYNC jobs running
+wait_for_job_slot() {
+  while true; do
+    active_jobs=$(jobs -p | wc -l)
+    if [ "$active_jobs" -lt "$ASYNC" ]; then
+      break
+    fi
+    sleep 0.1
+  done
+}
+
 # Function to make a curl request with a group of entities
 make_group_request() {
   local entities=()
@@ -45,6 +56,7 @@ make_group_request() {
 # Create items with string statements in groups
 for ((i=1; i<=HALF_COUNT; i+=$ENTITY_GROUP))
 do
+  wait_for_job_slot
   (
     # Temporary file to store the JSON array
     temp_file=$(mktemp)
@@ -82,12 +94,12 @@ do
       # Retry logic would go here but for simplicity we'll just log the error
     fi
   )&
-  if (( $(wc -w <<<$(jobs -p)) % $ASYNC == 0 )); then sleep 0.5; fi
 done
 
 # Create items with item references in groups
 for ((i=1; i<=HALF_COUNT; i+=$ENTITY_GROUP))
 do
+  wait_for_job_slot
   (
     # Temporary file to store the JSON array
     temp_file=$(mktemp)
@@ -125,7 +137,6 @@ do
       # Retry logic would go here but for simplicity we'll just log the error
     fi
   )&
-  if (( $(wc -w <<<$(jobs -p)) % $ASYNC == 0 )); then sleep 0.5; fi
 done
 
 wait

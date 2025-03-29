@@ -1,5 +1,7 @@
 # wikibase-profile
 
+Written up in a blog post https://addshore.com/2025/03/profiling-wikibase-apis-and-import-speed/
+
 The general idea of this repo is to allow some basic profiling of different setups of Wikibase, using Docker, in a mildly automated way.
 
 Steps:

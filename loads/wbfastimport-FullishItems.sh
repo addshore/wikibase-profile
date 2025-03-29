@@ -44,7 +44,7 @@ make_group_request() {
   local response
   local url="http://localhost:818$((1 + RANDOM % $INSTANCES))/w/api.php"
   
-  response=$(curl -s -m 20 -X POST -F "action=wbfastimport" -F "format=json" -F "data=${data}" "$url")
+  response=$(curl -s -m 300 -X POST -F "action=wbfastimport" -F "format=json" -F "data=${data}" "$url")
   echo "$response" >> process.out
   
   if [[ "$response" != *"success"* ]]; then
@@ -82,7 +82,7 @@ do
     # Send the request with the temp file data
     data=$(cat "$temp_file")
     url="http://localhost:818$((1 + RANDOM % $INSTANCES))/w/api.php"
-    response=$(curl -s -m 20 -X POST -F "action=wbfastimport" -F "format=json" -F "data=${data}" "$url")
+    response=$(curl -s -m 300 -X POST -F "action=wbfastimport" -F "format=json" -F "data=${data}" "$url")
     echo "$response" >> process.out
     
     # Clean up
@@ -125,7 +125,7 @@ do
     # Send the request with the temp file data
     data=$(cat "$temp_file")
     url="http://localhost:818$((1 + RANDOM % $INSTANCES))/w/api.php"
-    response=$(curl -s -m 20 -X POST -F "action=wbfastimport" -F "format=json" -F "data=${data}" "$url")
+    response=$(curl -s -m 300 -X POST -F "action=wbfastimport" -F "format=json" -F "data=${data}" "$url")
     echo "$response" >> process.out
     
     # Clean up

@@ -56,7 +56,7 @@ for instance in $instances; do
                 docker-compose up -d --force-recreate wikibase1
                 ./docker-compose-wait1.sh
                 sleep 2
-                
+
                 echo "Running init.."
                 start_time=$(date +%s)
                 INSTANCES=$instance ./loads/init.sh
@@ -71,8 +71,11 @@ for instance in $instances; do
                 stop_time=$(date +%s)
                 total_time=$((stop_time - start_time))
                 echo "Stop time: $stop_time" > $job_dir/stop.out
-                echo "Total time: $total_time" > $job_dir/time.out
+                echo "Total time: $total_time" > $job_dir/time.o
                 success_line=$(grep -o "success" process.out | wc -l)
+                if [[ $load == *"rest"* ]]; then
+                  success_line=$((success_line + $(grep -o '"type":"item"' process.out | wc -l)))
+                fi
                 echo "Success line: $success_line" > $job_dir/success_line.out
                 cp process.out $job_dir/process.out
                 # Get statistics, but do it twice to make sure things have finished processing, and sleep in the middle?
